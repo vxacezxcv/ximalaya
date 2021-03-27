@@ -82,6 +82,7 @@ def download():
     for n in range(0,len(xuanzhong_index)):
         name = Listbox1.get(xuanzhong_index[n])
         url = Listbox2.get(xuanzhong_index[n])
+        os.system(f'mkdir -p {path}')
         file_name = path + '/' + name + '.mp3'
         file1 = requests.get(url,headers = headers)
         with open(file_name,'wb') as code:
@@ -196,7 +197,8 @@ Entry2 = tk.Entry(windows)
 Entry2.place(height = 34,width = 531,x = 4,y = 42)
 Entry3 = tk.Entry(windows)
 Entry3.place(height = 34,width = 531,x = 4,y = 80)
-path = os.getcwd() + '/downloads'
+# path = os.getcwd() + '/downloads'
+path = os.path.expanduser('~/Downloads/ximalaya')
 Entry3.insert(END,path)
 Button1 = tk.Button(windows,text='搜索',command = search_button_click)
 Button1.place(height = 34,width = 123,x = 539,y = 5)
