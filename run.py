@@ -11,6 +11,8 @@ import random
 import threading
 import time
 import tkinter as tk
+import tkinter.filedialog
+import tkinter.messagebox
 from tkinter import ttk
 from urllib import parse
 
@@ -39,7 +41,7 @@ def xm_md5():
         part_e = nowTime
         sign = f'{part_a}{part_b}{part_c}{part_d}{part_e}'
     except:
-        tk.messagebox.showerror('错误', '请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     return sign
 
 
@@ -50,7 +52,7 @@ def open_link():
     try:
         albumId = link.split('/')[4]
     except:
-        tk.messagebox.showerror('错误', '请输入正确的链接')
+        tkinter.messagebox.showerror('错误', '请输入正确的链接')
     url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
            f'albumId={albumId}&pageId=1')
     try:
@@ -70,7 +72,7 @@ def open_link():
                 Listbox1.insert(tk.END, title)
                 Listbox2.insert(tk.END, playUrl64)
     except:
-        tk.messagebox.showerror('错误', '请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(tk.END, '> 解析线程结束\n')
     Text1.see(tk.END)
 
@@ -122,7 +124,7 @@ def solve():
                 Listbox1.insert(tk.END, title)
                 Listbox2.insert(tk.END, playUrl64)
     except:
-        tk.messagebox.showerror('错误', '请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(tk.END, '> 解析线程结束\n')
     Text1.see(tk.END)
 
@@ -164,14 +166,14 @@ def search():
                 id = x['id']
                 treeview1.insert('', 'end',values=(title,id))
     except:
-        tk.messagebox.showerror('错误', '请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(tk.END, '> 搜索线程结束\n')
     Text1.see(tk.END)
 
 
 def set_dir():
     global path
-    path = tk.filedialog.askdirectory()
+    path = tkinter.filedialog.askdirectory()
     Entry3.delete(0, tk.END)
     Entry3.insert(tk.END, path)
 
