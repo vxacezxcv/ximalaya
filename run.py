@@ -94,6 +94,8 @@ def download():
             code.write(file1.content)
         Text1.insert(END, f'> [{cur+1}/{total}] {fpath} 下载成功\n')
         Text1.see(END)
+    Text1.insert(END, f'> 全部下载完成.\n')
+    Text1.see(END)
 
 
 def solve():
