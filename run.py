@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# pylint: disable=invalid-name
+# pylint: disable=bare-except
+# pylint: disable=missing-function-docstring
+
 import hashlib
 import json
 import os
@@ -76,18 +80,19 @@ def open_link():
 
 def download():
     global path
-    xuanzhong_index = Listbox1.curselection()
-    Text1.insert(END, '> ' + str(len(xuanzhong_index)) + '个任务正在下载\n')
+    chosen_indices = Listbox1.curselection()
+    Text1.insert(END, '> ' + str(len(chosen_indices)) + '个任务正在下载\n')
     Text1.see(END)
-    for n in range(0,len(xuanzhong_index)):
-        name = Listbox1.get(xuanzhong_index[n])
-        url = Listbox2.get(xuanzhong_index[n])
+    total = len(chosen_indices)
+    for cur, chosen_idx in enumerate(chosen_indices):
+        fname = Listbox1.get(chosen_idx)
+        url = Listbox2.get(chosen_idx)
         os.system(f'mkdir -p {path}')
-        file_name = path + '/' + name + '.mp3'
+        fpath = f'{path}/{fname}.mp3'
         file1 = requests.get(url,headers = headers)
-        with open(file_name,'wb') as code:
+        with open(fpath,'wb') as code:
             code.write(file1.content)
-        Text1.insert(END, '> ' + file_name + '下载成功\n')
+        Text1.insert(END, f'> [{cur+1}/{total}] {fpath} 下载成功\n')
         Text1.see(END)
 
 
@@ -117,7 +122,6 @@ def solve():
                 Listbox2.insert(END,playUrl64)
     except:
         tkinter.messagebox.showerror('错误','请检查网络是否畅通')
-        return 0
     Text1.insert(END, '> 解析线程结束\n')
     Text1.see(END)
 
@@ -152,7 +156,6 @@ def search(): #按照关键词进行搜索
                 treeview1.insert('', 'end',values=(title,id))
     except:
         tkinter.messagebox.showerror('错误','请检查网络是否畅通')
-        return 0
     Text1.insert(END, '> 搜索线程结束\n')
     Text1.see(END)
 
@@ -190,26 +193,25 @@ windows.geometry('917x564')  # +34+306
 windows.title('喜马拉雅专辑下载4.2 BY:Snow')
 windows.resizable(0,0)
 Label1 = tk.Label(windows)
-Label1.place(height = 22,width = 904,x = 5,y = 420)
+Label1.place(height=22, width=904, x=5, y=420)
 Entry1 = tk.Entry(windows)
-Entry1.place(height = 34,width = 531,x = 4,y = 5)
+Entry1.place(height=34, width=531, x=4, y=5)
 Entry2 = tk.Entry(windows)
-Entry2.place(height = 34,width = 531,x = 4,y = 42)
+Entry2.place(height=34, width=531, x=4, y=42)
 Entry3 = tk.Entry(windows)
-Entry3.place(height = 34,width = 531,x = 4,y = 80)
-# path = os.getcwd() + '/downloads'
+Entry3.place(height=34, width=531, x=4, y=80)
 path = os.path.expanduser('~/Downloads/ximalaya')
 Entry3.insert(END,path)
-Button1 = tk.Button(windows,text='搜索',command = search_button_click)
-Button1.place(height = 34,width = 123,x = 539,y = 5)
-Button2 = tk.Button(windows,text='下载选中',command = pass_download)
-Button2.place(height = 109,width = 246,x = 664,y = 5)
-Button3 = tk.Button(windows,text='打开链接',command = open_link_button_click)
-Button3.place(height = 34,width = 123,x = 539,y = 43)
-Button4 = tk.Button(windows,text='选择目录',command = set_dir_click)
-Button4.place(height = 34,width = 123,x = 539,y = 80)
+Button1 = tk.Button(windows, text='搜索', command=search_button_click)
+Button1.place(height=34, width=123, x=539, y=5)
+Button2 = tk.Button(windows, text='下载选中', command=pass_download)
+Button2.place(height=109, width = 246, x=664, y=5)
+Button3 = tk.Button(windows, text='打开链接', command=open_link_button_click)
+Button3.place(height=34, width=123, x=539, y=43)
+Button4 = tk.Button(windows, text='选择目录', command=set_dir_click)
+Button4.place(height=34, width=123, x=539, y=80)
 Text1 = tk.Text(windows)
-Text1.place(height = 88,width = 904,x = 5,y = 469)
+Text1.place(height=88, width=904, x=5, y=469)
 Text1.insert(END, '> 启动成功！\n')
 Text1.see(END)
 
