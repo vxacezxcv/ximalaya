@@ -41,7 +41,7 @@ def xm_md5():
         nowTime = str(round(time.time()*1000))
         sign = str(hashlib.md5("himalaya-{}".format(html.text).encode()).hexdigest()) + "({})".format(str(round(random.random()*100))) + html.text + "({})".format(str(round(random.random()*100))) + nowTime
     except:
-        tkinter.messagebox.showerror('错误','请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     return sign
 
 
@@ -52,7 +52,7 @@ def open_link():
     try:
         albumId = link.split('/')[4]
     except:
-        tkinter.messagebox.showerror('错误','请输入正确的链接')
+        tkinter.messagebox.showerror('错误', '请输入正确的链接')
     url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=1'
     try:
         html = requests.get(url)
@@ -70,7 +70,7 @@ def open_link():
                 Listbox1.insert(END,title)
                 Listbox2.insert(END,playUrl64)
     except:
-        tkinter.messagebox.showerror('错误','请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(END, '> 解析线程结束\n')
     Text1.see(END)
 
@@ -120,7 +120,7 @@ def solve():
                 Listbox1.insert(END,title)
                 Listbox2.insert(END,playUrl64)
     except:
-        tkinter.messagebox.showerror('错误','请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(END, '> 解析线程结束\n')
     Text1.see(END)
 
@@ -156,7 +156,7 @@ def search(): #按照关键词进行搜索
                 id = x['id']
                 treeview1.insert('', 'end',values=(title,id))
     except:
-        tkinter.messagebox.showerror('错误','请检查网络是否畅通')
+        tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     Text1.insert(END, '> 搜索线程结束\n')
     Text1.see(END)
 
