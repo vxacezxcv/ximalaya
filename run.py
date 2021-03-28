@@ -24,7 +24,7 @@ import requests
 # 获取下载链接1 https://www.ximalaya.com/revision/play/v1/audio?id={搜索1ID}&ptype=1
 # 获取下载链接2 http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId={}&pageId=1
 # 关键字搜索 http://searchwsa.ximalaya.com/front/v1?appid=0&condition=relation&core=chosen2&device=android&deviceId=9a68144e-de5b-3c60-be5e-adce947ab5ff&kw={}&live=true&needSemantic=true&network=wifi&operator=1&page=1&paidFilter=false&plan=c&recall=normal&rows=20&search_version=2.8&spellchecker=true&version=6.6.48&voiceAsinput=false
-columns1 = ('TITTLE', 'ID')
+columns1 = ('TITLE', 'ID')
 headers = {'user-agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/72.0.3626.96 Safari/537.36')}
@@ -218,9 +218,9 @@ Text1.see(END)
 # 列表1
 treeview1 = ttk.Treeview(windows, height=10, show='headings', columns=columns1)
 treeview1.place(height = 299,width = 530,x = 5,y = 116)
-treeview1.column('TITTLE', width=330, anchor='center')  # 表示列, 不显示
+treeview1.column('TITLE', width=330, anchor='center')  # 表示列, 不显示
 treeview1.column('ID', width=200, anchor='center')
-treeview1.heading('TITTLE', text='TITTLE')  # 显示表头
+treeview1.heading('TITLE', text='TITLE')  # 显示表头
 treeview1.heading('ID', text='ID')
 treeview1.bind('<Double-1>', treeview1_click)
 Scrollbar1 = tk.Scrollbar(treeview1)
