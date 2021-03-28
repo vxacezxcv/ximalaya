@@ -23,6 +23,7 @@ import requests
 # 获取下载链接1 https://www.ximalaya.com/revision/play/v1/audio?id={搜索1ID}&ptype=1
 # 获取下载链接2 http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId={}&pageId=1
 # 关键字搜索 http://searchwsa.ximalaya.com/front/v1?appid=0&condition=relation&core=chosen2&device=android&deviceId=9a68144e-de5b-3c60-be5e-adce947ab5ff&kw={}&live=true&needSemantic=true&network=wifi&operator=1&page=1&paidFilter=false&plan=c&recall=normal&rows=20&search_version=2.8&spellchecker=true&version=6.6.48&voiceAsinput=false
+
 columns1 = ('TITLE', 'ID')
 headers = {'user-agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -38,7 +39,13 @@ def xm_md5():
     try:
         html = requests.get(url, headers = header)
         nowTime = str(round(time.time()*1000))
-        sign = str(hashlib.md5("himalaya-{}".format(html.text).encode()).hexdigest()) + "({})".format(str(round(random.random()*100))) + html.text + "({})".format(str(round(random.random()*100))) + nowTime
+
+        part_a = str(hashlib.md5(f"himalaya-{html.text}".encode()).hexdigest())
+        part_b = "({})".format(str(round(random.random()*100)))
+        part_c = html.text
+        part_d = "({})".format(str(round(random.random()*100)))
+        part_e = nowTime
+        sign = f'{part_a}{part_b}{part_c}{part_d}{part_e}'
     except:
         tkinter.messagebox.showerror('错误', '请检查网络是否畅通')
     return sign
@@ -52,14 +59,16 @@ def open_link():
         albumId = link.split('/')[4]
     except:
         tkinter.messagebox.showerror('错误', '请输入正确的链接')
-    url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=1'
+    url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
+           f'albumId={albumId}&pageId=1')
     try:
         html = requests.get(url)
         all = json.loads(html.text)
         maxPageId = all['maxPageId']
         list1 = range(1,maxPageId + 1)
         for n in list1:
-            url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=' + str(n)
+            url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
+                   f'albumId={albumId}&pageId={n}')
             html = requests.get(url)
             all = json.loads(html.text)
             data = all['list']
@@ -90,7 +99,7 @@ def download():
             code.write(file1.content)
         Text1.insert(tk.END, f'> [{cur+1}/{total}] {fpath} 下载成功\n')
         Text1.see(tk.END)
-    Text1.insert(tk.END, f'> 全部下载完成.\n')
+    Text1.insert(tk.END, '> 全部下载完成.\n')
     Text1.see(tk.END)
 
 
@@ -102,14 +111,16 @@ def solve():
     for item in treeview1.selection():
         item_text = treeview1.item(item,'values')
         albumId = item_text[1]
-    url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=1'
+    url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
+           f'albumId={albumId}&pageId=1')
     try:
         html = requests.get(url)
         all = json.loads(html.text)
         maxPageId = all['maxPageId']
         list1 = range(1,maxPageId + 1)
         for n in list1:
-            url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=' + str(n)
+            url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
+                   f'albumId={albumId}&pageId={n}')
             html = requests.get(url)
             all = json.loads(html.text)
             data = all['list']
