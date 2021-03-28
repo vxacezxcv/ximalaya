@@ -31,30 +31,28 @@ headers = {'user-agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
 
 def xm_md5():
     url = 'https://www.ximalaya.com/revision/time'
-    headrer = {'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
-                              'AppleWebKit/537.36 (KHTML, like Gecko) '
-                              'Chrome/72.0.3626.96 Safari/537.36'),
-               'Host': 'www.ximalaya.com',
-               'Accept-Encoding': 'gzip, deflate, br'}
+    header = {'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                             'AppleWebKit/537.36 (KHTML, like Gecko) '
+                             'Chrome/72.0.3626.96 Safari/537.36'),
+              'Host': 'www.ximalaya.com',
+              'Accept-Encoding': 'gzip, deflate, br'}
     try:
-        html = requests.get(url, headers = headrer)
+        html = requests.get(url, headers = header)
         nowTime = str(round(time.time()*1000))
         sign = str(hashlib.md5("himalaya-{}".format(html.text).encode()).hexdigest()) + "({})".format(str(round(random.random()*100))) + html.text + "({})".format(str(round(random.random()*100))) + nowTime
     except:
         tkinter.messagebox.showerror('错误','请检查网络是否畅通')
-        return 0
     return sign
 
 
 def open_link():
-    Listbox1.delete(0,END)
-    Listbox2.delete(0,END)
+    Listbox1.delete(0, END)
+    Listbox2.delete(0, END)
     link = Entry2.get()
     try:
         albumId = link.split('/')[4]
     except:
         tkinter.messagebox.showerror('错误','请输入正确的链接')
-        return 0
     url = 'http://mobwsa.ximalaya.com/mobile/playlist/album/page?albumId=' + albumId + '&pageId=1'
     try:
         html = requests.get(url)
@@ -73,7 +71,6 @@ def open_link():
                 Listbox2.insert(END,playUrl64)
     except:
         tkinter.messagebox.showerror('错误','请检查网络是否畅通')
-        return 0
     Text1.insert(END, '> 解析线程结束\n')
     Text1.see(END)
 
@@ -140,16 +137,18 @@ def search(): #按照关键词进行搜索
     clear_list(treeview1)
     name = parse.quote(Entry1.get())
     url = 'https://www.ximalaya.com/revision/search?core=album&kw='+ name + '&spellchecker=true&rows=20&condition=relation&device=iPhone'
-    head = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36',
-           'xm-sign':xm_md5()}
+    head = {'user-agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                           'AppleWebKit/537.36 (KHTML, like Gecko) '
+                           'Chrome/72.0.3626.96 Safari/537.36'),
+            'xm-sign':xm_md5()}
     try:
-        html = requests.get(url,headers = head)
+        html = requests.get(url, headers=head)
         all = json.loads(html.text)
         total_pages = all['data']['result']['response']['totalPage']
         pages_list = range(1,total_pages + 1)
         for n in pages_list:
             url = 'https://www.ximalaya.com/revision/search?core=album&kw=' + name + '&page='+ str(n) + '&spellchecker=true&rows=20&condition=relation&device=iPhone'
-            html = requests.get(url,headers = head)
+            html = requests.get(url, headers=head)
             all = json.loads(html.text)
             data = all['data']['result']['response']['docs']
             for x in data:
