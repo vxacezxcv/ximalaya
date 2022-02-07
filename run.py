@@ -87,7 +87,8 @@ def download():
         fname = Listbox1.get(chosen_idx)
         url = Listbox2.get(chosen_idx)
         os.system(f'mkdir -p {path}')
-        fpath = f'{path}/{fname}.mp3'
+        fprefix = str(cur).zfill(len(str(total)))
+        fpath = f'{path}/{fprefix}-{fname}.mp3'
         file1 = requests.get(url,headers = headers)
         with open(fpath,'wb') as code:
             code.write(file1.content)
@@ -111,7 +112,7 @@ def solve():
         html = requests.get(url)
         all = json.loads(html.text)
         maxPageId = all['maxPageId']
-        list1 = range(1,maxPageId + 1)
+        list1 = range(1, maxPageId + 1)
         for n in list1:
             url = (f'http://mobwsa.ximalaya.com/mobile/playlist/album/page?'
                    f'albumId={albumId}&pageId={n}')
