@@ -87,7 +87,7 @@ def download():
         fname = Listbox1.get(chosen_idx)
         url = Listbox2.get(chosen_idx)
         os.system(f'mkdir -p {path}')
-        fprefix = str(cur).zfill(len(str(total)))
+        fprefix = str(cur+1).zfill(len(str(total)))
         fpath = f'{path}/{fprefix}-{fname}.mp3'
         file1 = requests.get(url,headers = headers)
         with open(fpath,'wb') as code:
