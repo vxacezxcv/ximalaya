@@ -49,7 +49,7 @@ def xm_md5():
         part_d = "({})".format(str(round(random.random() * 100)))
         part_e = nowTime
         sign = f"{part_a}{part_b}{part_c}{part_d}{part_e}"
-    except:
+    except Exception:
         tkinter.messagebox.showerror("错误", "请检查网络是否畅通")
     return sign
 
@@ -60,7 +60,7 @@ def open_link():
     link = Entry2.get()
     try:
         albumId = link.split("/")[4]
-    except:
+    except Exception:
         tkinter.messagebox.showerror("错误", "请输入正确的链接")
     url = (
         f"http://mobwsa.ximalaya.com/mobile/playlist/album/page?"
@@ -84,7 +84,7 @@ def open_link():
                 playUrl64 = a["playUrl64"]
                 Listbox1.insert(tk.END, title)
                 Listbox2.insert(tk.END, playUrl64)
-    except:
+    except Exception:
         tkinter.messagebox.showerror("错误", "请检查网络是否畅通")
     Text1.insert(tk.END, "> 解析线程结束\n")
     Text1.see(tk.END)
@@ -141,7 +141,7 @@ def solve():
                 playUrl64 = a["playUrl64"]
                 Listbox1.insert(tk.END, title)
                 Listbox2.insert(tk.END, playUrl64)
-    except:
+    except Exception:
         tkinter.messagebox.showerror("错误", "请检查网络是否畅通")
     Text1.insert(tk.END, "> 解析线程结束\n")
     Text1.see(tk.END)
@@ -191,7 +191,7 @@ def search():
                 title = x["title"]
                 id = x["id"]
                 treeview1.insert("", "end", values=(title, id))
-    except:
+    except Exception:
         tkinter.messagebox.showerror("错误", "请检查网络是否畅通")
     Text1.insert(tk.END, "> 搜索线程结束\n")
     Text1.see(tk.END)
